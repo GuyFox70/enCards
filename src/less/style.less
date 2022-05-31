@@ -1,0 +1,89 @@
+@baseBack: #e1e1e1;
+@backTop: #bcbcff;
+@bdRaduis3: 3px;
+@bdRaduis5: 5px;
+@bdRaduis15: 15px;
+@topHeight: 60px;
+
+@font-face {
+  font-family: "ReemKufiRegular";
+  src: url("/fonts/ReemKufi-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "RedressedRegular";
+  src: url("/fonts/Redressed-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "OpenSansRegular";
+  src: url("/fonts/OpenSans-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "OpenSansLight";
+  src: url("/fonts/OpenSans-Light.woff") format("woff");
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  outline: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: @baseBack;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.mixFlexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  background: @baseBack;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  width: 100%;
+  height: 60px;
+  background: @backTop;
+  height: @topHeight;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, .3);
+  padding: 0 10px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+
+  flex-grow: 1;
+  width: 100%;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+@import './top.less';
+@import './main.less';
+@import './card.less';
+@import './table.less';
+@import './mediaQuery.less';
+
+.hidden {
+  display: none;
+}

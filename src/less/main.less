@@ -1,0 +1,45 @@
+.main__menu {
+  position: absolute;
+  top: 0;
+  left: -350px;
+  width: 300px;
+  height: 100%;
+  background: rgba(0, 0, 0, .9);
+  display: flex;
+  align-items: stretch;
+  transition: left .3s linear;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
+}
+
+.menu__items {
+  width: 100%;
+  margin: 10px 0 0 0;
+}
+
+.menu__item {
+  color: #fff;
+  font-family: "OpenSansRegular", sans-serif;
+  font-size: 17px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 7px;
+  cursor: pointer;
+  
+  &:not(:first-child) {
+    border-bottom: 1px solid #fff;
+  }
+  
+  &:not(:last-child) {
+    border-top: 1px solid #fff;
+  }
+
+  &:hover {
+    color: rgb(208, 208, 208);
+    transition: color .1s linear;
+  }
+}
+
+.active-tab {
+  color: rgb(208, 208, 208);
+}

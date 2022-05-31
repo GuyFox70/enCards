@@ -1,0 +1,54 @@
+.main__table {
+  width: 90%;
+  margin: 15px 0 0 0;
+  border-radius: 10px;
+  background: #fff;
+  align-self: flex-start;
+  padding: 7px;
+}
+.table__thead {
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 5px 0;
+}
+.table__tr {
+  width: 100%;
+  padding: 3px 10px;
+  display: flex;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  font-family: "OpenSansRegular";
+}
+.table__tbody > .table__tr:not(:last-child) {
+  margin: 0 0 5px 0;
+}
+.table__tbody > .table__tr {
+  cursor: pointer;
+}
+.table__tbody > .table__tr:hover {
+  background: lightgray;
+}
+.table__th {
+  font-weight: bold;
+}
+.table__th,
+.table__td {
+  font-size: 18px;
+  padding: 5px;
+}
+.cell__number {
+  width: 7%;
+  text-align: center;
+}
+.cell__word {
+  width: 25%;
+}
+.cell__transcription {
+  width: 25%;
+}
+.cell__translate {
+  width: 45%;
+}

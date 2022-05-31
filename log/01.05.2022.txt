@@ -1,0 +1,2 @@
+1. 01.05.2022 21:39:40 - /routers/index.mjs - router;
+2. 01.05.2022 21:39:40 - /server.mjs - ENOENT: no such file or directory, open 'C:\Users\fedor\projects\customServer\build\jfdhkjf.js';
