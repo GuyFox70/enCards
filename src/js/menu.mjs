@@ -1,4 +1,4 @@
-class Menu extends Helper {
+class Menu {
   #menuItem;
   #topBtMenu;
   #menu;
@@ -10,15 +10,14 @@ class Menu extends Helper {
   #card;
 
   constructor(card) {
-    super();
-    this.#menuItem = super.getSelectorAll('.menu__item');
-    this.#topBtMenu = super.getSelector('#topBtMenu');
-    this.#menu = super.getSelector('#menu');
-    this.#partSpeech = super.getAttr(super.getSelector('.activeTab'), 'data-partSpeech');
+    this.#menuItem = Helper.getSelectorAll('.menu__item');
+    this.#topBtMenu = Helper.getSelector('#topBtMenu');
+    this.#menu = Helper.getSelector('#menu');
+    this.#partSpeech = Helper.getAttr(Helper.getSelector('.activeTab'), 'data-partSpeech');
     this.#i = 0;
-    this.#words = super.fromJson(localStorage.getItem('words')) || null;
-    this.#skip = super.getInt(localStorage.getItem('skip')) || 0;
-    this.#limit = super.getInt(localStorage.getItem('limit')) || 100;
+    this.#words = Helper.fromJson(localStorage.getItem('words')) || null;
+    this.#skip = Helper.getInt(localStorage.getItem('skip')) || 0;
+    this.#limit = Helper.getInt(localStorage.getItem('limit')) || 100;
     this.#card = card;
   }
 
@@ -46,43 +45,39 @@ class Menu extends Helper {
     this.#words = words;
   }
 
-  requestWordsFromDB(skip, limit, callback) {
+  requestWordsFromDB(skip, limit) {
     const formData = new FormData;
     formData.set('skip', skip);
     formData.set('limit', limit);
     formData.set('partSpeech', this.#partSpeech);
-  
-    this.sendFetch('/getWords', { method: 'POST', body: formData }, (err, data) => {
-      if (err) {
-        callback(err)
-      } else {
-        callback(null, data);
-      }
+
+    return new Promise((resolve, reject) => {
+      Helper.sendFetch('/getWords', { method: 'POST', body: formData })
+      .then(resolve)
+      .catch(reject);
     });
   }
 
   #addEventItemsMenu() {
     for (const item of this.#menuItem) {
-      this.setEventElement(item, 'click', () => {
-        if (this.#partSpeech !== this.getAttr(item, 'data-partSpeech')) {
-          this.#menuItem.forEach(elem => this.removeClass(elem, 'activeTab'));
-          this.addClass(item, 'activeTab');
+      Helper.setEvent(item, 'click', () => {
+        if (this.#partSpeech !== Helper.getAttr(item, 'data-partSpeech')) {
+          this.#menuItem.forEach(elem => Helper.rmClass(elem, 'activeTab'));
+          Helper.addClass(item, 'activeTab');
 
-          this.#partSpeech = this.getAttr(item, 'data-partSpeech');
+          this.#partSpeech = Helper.getAttr(item, 'data-partSpeech');
 
-          this.removeAttr(this.#menu, 'style');
-          this.removeClass(this.#topBtMenu, 'activeItem');
+          Helper.rmAttr(this.#menu, 'style');
+          Helper.rmClass(this.#topBtMenu, 'activeItem');
           this.#i--;
 
-          this.requestWordsFromDB(this.#skip, this.#limit, (err, data) => {
-            if (err) {
-              alert(err.message);
-            } else {
-              this.#words = data;
-              this.#card.setI(0);
-              this.#card.setWordToField(this.#words, this.#partSpeech);
-            }
-          });
+          this.requestWordsFromDB(this.#skip, this.#limit)
+          .then(data => {
+            this.#words = data;
+            this.#card.resetCounter();
+            this.#card.setWordToField(this.#words, this.#partSpeech);
+          })
+          .catch(err => { console.log(err), alert(err.message); });
         }
       });
     }
@@ -90,28 +85,26 @@ class Menu extends Helper {
 
   init() {
     if (this.#words === null) {
-      this.requestWordsFromDB(this.#skip, this.#limit, (err, data) => {
-        if (err) {
-          alert(err.message);
-        } else {
-          this.#words = data;
-          this.#card.setWordToField(this.#words, this.#partSpeech);
-        }
-      });
+      this.requestWordsFromDB(this.#skip, this.#limit)
+      .then(data => {
+        this.#words = data;
+        this.#card.setWordToField(this.#words, this.#partSpeech);
+      })
+      .catch(err => { console.log(err), alert(err.message); });
     } else {
       this.#card.setWordToField(this.#words, this.#partSpeech);
     }
 
     this.#addEventItemsMenu();
 
-    this.setEventElement(this.#topBtMenu, 'click', () => {
+    Helper.setEvent(this.#topBtMenu, 'click', () => {
       if (!this.#i) {
-        this.addClass(this.#topBtMenu, 'activeItem');
-        this.setAttr(this.#menu, 'style', 'left: 0; transition: left .3s linear;');
+        Helper.addClass(this.#topBtMenu, 'activeItem');
+        Helper.setAttr(this.#menu, 'style', 'left: 0; transition: left .3s linear;');
         this.#i++;
       } else {
-        this.rmClass(this.#topBtMenu, 'activeItem');
-        this.rmAttr(this.#menu, 'style');  
+        Helper.rmClass(this.#topBtMenu, 'activeItem');
+        Helper.rmAttr(this.#menu, 'style');  
         this.#i--;
       }
     });

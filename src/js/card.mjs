@@ -1,4 +1,4 @@
-class Card extends Helper {
+class Card {
   #flipCard;
   #flipCardInner;
   #eng;
@@ -14,18 +14,17 @@ class Card extends Helper {
   #translateField;
 
   constructor() {
-    super();
-    this.#flipCard = super.getSelector('#flipCard');
-    this.#eng = super.getSelector('#eng');
-    this.#mistakeReport = super.getSelector('#mistakeReport');
-    this.#btnsendReport = super.getSelector('#sendReport');
-    this.#btnCancelReport = super.getSelector('#cancelReport');
-    this.#btnPrev = super.getSelector('#prevWord');
-    this.#btnKnow = super.getSelector('#knowWord');
-    this.#btnNext = super.getSelector('#nextWord');
-    this.#wordField = super.getSelector('#wordField');
-    this.#translateField = super.getSelector('#translateField');
-    this.#flipCardInner = super.getSelector('#flipCardInner');
+    this.#flipCard = Helper.getSelector('#flipCard');
+    this.#eng = Helper.getSelector('#eng');
+    this.#mistakeReport = Helper.getSelector('#mistakeReport');
+    this.#btnsendReport = Helper.getSelector('#sendReport');
+    this.#btnCancelReport = Helper.getSelector('#cancelReport');
+    this.#btnPrev = Helper.getSelector('#prevWord');
+    this.#btnKnow = Helper.getSelector('#knowWord');
+    this.#btnNext = Helper.getSelector('#nextWord');
+    this.#wordField = Helper.getSelector('#wordField');
+    this.#translateField = Helper.getSelector('#translateField');
+    this.#flipCardInner = Helper.getSelector('#flipCardInner');
 
     this.#i = 0;
     this.#j = 0;
@@ -51,27 +50,27 @@ class Card extends Helper {
     setTimeout(() => {
       if (words === null || words.length === 0) {
         alert('Empty');
-        this.#wordField.innerHTML = 'Example';
-        this.#translateField.innerHTML = 'Пример';
+        Helper.addText(this.#wordField, 'Example');
+        Helper.addText(this.#translateField, 'Пример');
       } else {
-        this.#wordField.innerHTML = words[this.#i].word;
-        this.#translateField.innerHTML = words[this.#i].translate[partSpeech].join(', ');
+        Helper.addText(this.#wordField, words[this.#i].word);
+        Helper.addText(this.#translateField, words[this.#i].translate[partSpeech].join(', '));
       }
     }, 0);
   }
 
   init(menu) {
-    this.setEventElement(this.#flipCard, 'click', e => {
+    Helper.setEvent(this.#flipCard, 'click', e => {
       if (!this.#j) {
-        this.addClass(this.#flipCardInner, 'flip-card__inner-back');
+        Helper.addClass(this.#flipCardInner, 'flip-card__inner-back');
         this.#j++;
       } else {
-        this.rmClass(this.#flipCardInner, 'flip-card__inner-back');
+        Helper.rmClass(this.#flipCardInner, 'flip-card__inner-back');
         this.#j--;
       }
     });
 
-    this.setEventElement(this.#btnPrev, 'click', e => {
+    Helper.setEvent(this.#btnPrev, 'click', e => {
       e.stopPropagation();
 
       this.#i--;
@@ -83,12 +82,12 @@ class Card extends Helper {
       this.setWordToField(menu.getWords(), menu.getPartSpeech());
     });
 
-    this.setEventElement(this.#btnKnow, 'click', e => {
+    Helper.setEvent(this.#btnKnow, 'click', e => {
       e.stopPropagation();
       console.log('push');
     });
 
-    this.setEventElement(this.#btnNext, 'click', e => {
+    Helper.setEvent(this.#btnNext, 'click', e => {
       e.stopPropagation();
 
       this.#i++;

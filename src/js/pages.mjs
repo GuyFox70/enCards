@@ -1,38 +1,54 @@
-class Pages extends Helper {
+class Pages {
   #totalPage;
+  #currentPage;
+  #amountWords;
+  #p;
 
   constructor() {
-    super();
-    this.#totalPage = super.getSelector('#totalPage');
+    this.#totalPage = Helper.getSelector('#totalPage');
+    this.#currentPage = Helper.getSelector('#currentPage');
+    this.#p = 0;
 
-    this.amountWords = {};
+    this.#amountWords = {};
   }
 
+  calculateAmountPages(totalPages, amountWords) {
+    this.#p = Math.round(totalPages / amountWords);
+  }
 
-  queryAmountWords() {
+  #setPagesField(pages) {
+    Helper.addText(this.#totalPage, pages);
+    Helper.setAttr(this.#totalPage, 'data-pages', pages);
+  }
+
+  #getCommonAmountWords(amountWords) {
     const formData = new FormData;
-    const partSpeech = this.getAttr(this.getSelector('.activeTab'), 'data-partSpeech');
+    const partSpeech = Helper.getAttr(Helper.getSelector('.activeTab'), 'data-partSpeech');
     formData.set('partSpeech', partSpeech);
 
-    if (!this.amountWords[partSpeech]) {
-      this.sendFetch('/getAmount', { method: 'POST', body: formData }, (err, data) => {
-        if (err) {
-          alert(err.message);
-          this.#totalPage.innerHTML = 0;
-          this.setAttr(this.#totalPage, 'data-pages', 0);
-        } else {
-          this.amountWords[partSpeech] = data;
-          this.#totalPage.innerHTML = this.amountWords[partSpeech];
-          this.setAttr(this.#totalPage, 'data-pages', this.amountWords[partSpeech]);
-        }          
-      });
+    if (!this.#amountWords[partSpeech]) {
+      Helper.sendFetch('/getAmount', { method: 'POST', body: formData })
+      .then(data => {
+        this.#amountWords[partSpeech] = data;
+        this.calculateAmountPages(this.#amountWords[partSpeech], amountWords);
+        this.#setPagesField(this.#p);
+      })
+      .catch(err => {
+        this.#setPagesField(0);
+        console.log(err);
+        alert(err.message);
+      })
     } else {
-      this.#totalPage.innerHTML = this.amountWords[partSpeech];
-      this.setAttr(this.#totalPage, 'data-pages', this.amountWords[partSpeech]);
+      this.calculateAmountPages(this.#amountWords[partSpeech], amountWords);
+      this.#setPagesField(this.#p);
     }
   }
 
-  init() {
-    this.queryAmountWords();
+  init(amountWords, menu, card) {
+    this.#getCommonAmountWords(amountWords.getAmountWords());
+
+    Helper.setEvent(this.#currentPage, 'blur', e => {
+      console.log(Helper.getInt(Helper.getAttr(e.target, 'data-page')));
+    });
   }
 }

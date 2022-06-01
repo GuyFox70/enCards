@@ -1,74 +1,78 @@
 class Helper {
-  constructor() {}
 
-  createElement(elem) {
+  static createElement(elem) {
     return document.createElement(elem);
   }
 
-  addText(elem, text) {
+  static addText(elem, text) {
     elem.innerHTML = text;
   }
 
-  getInt(num) {
+  static getInt(num) {
     return parseInt(num);
   }
 
-  getFloat(num) {
+  static getFloat(num) {
     return parseFloat(num);
   }
 
-  toJson(elem) {
+  static toJson(elem) {
     return JSON.stringify(elem);
   }
 
-  fromJson(elem) {
+  static fromJson(elem) {
     return JSON.parse(elem);
   }
 
-  getSelector(selector) {
+  static getSelector(selector) {
     return document.querySelector(selector);
   }
 
-  getSelectorAll(selector) {
+  static getSelectorAll(selector) {
     return document.querySelectorAll(selector);
   }
 
-  getAttr(elem, attr) {
+  static getAttr(elem, attr) {
     return elem.getAttribute(attr);
   }
 
-  setAttr(elem, key, value) {
+  static setAttr(elem, key, value) {
     elem.setAttribute(key, value);
   }
 
-  rmAttr(elem, key) {
+  static rmAttr(elem, key) {
     elem.removeAttribute(key);
   }
 
-  sendFetch(path, options, callback) {
-    fetch(path, options)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      callback(new Error('Fetch is failed!'));
-    })
-    .then(response => {
-      if (response.state) {
-        callback(null, response.data);
-      } else {
-        callback(new Error('Somethins wrong with response!'));
-      }
-
-    })
-    .catch(err => alert(err.message));
+  static sendFetch(path, options) {
+    return new Promise((resolve, reject) => {
+      fetch(path, options)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        reject(new Error('Fetch is failed!'));
+      })
+      .then(response => {
+        if (response.state) {
+          resolve(response.data);
+        } else {
+          reject(new Error('Somethins wrong with response!'));
+        }
+      })
+      .catch(reject);
+    });
   }
 
-  setEventElement(elem, event, fn) {
+  static setEvent(elem, event, fn) {
     elem.addEventListener(event, fn);
   }
 
-  addClass(elem, nameClass) {
+  static rmEvent(elem, event, fn) {
+    elem.removeEventListener(event, fn);
+  }
+
+  static addClass(elem, nameClass) {
     if (Array.isArray(nameClass)) {
       nameClass.forEach(str => elem.classList.add(str))
     } else {
@@ -76,11 +80,11 @@ class Helper {
     }
   }
 
-  rmClass(elem, nameClass) {
+  static rmClass(elem, nameClass) {
     elem.classList.remove(nameClass);
   }
 
-  hasClass(elem, className) {
+  static hasClass(elem, className) {
    return elem.classList.contains(className); 
   }
 }
