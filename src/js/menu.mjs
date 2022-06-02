@@ -41,14 +41,18 @@ class Menu {
     this.#limit = limit;
   }
 
+  setSkip(skip) {
+    this.#skip = skip;
+  }
+
   setWords(words) {
     this.#words = words;
   }
 
-  requestWordsFromDB(skip, limit) {
+  requestWordsFromDB() {
     const formData = new FormData;
-    formData.set('skip', skip);
-    formData.set('limit', limit);
+    formData.set('skip', this.#skip);
+    formData.set('limit', this.#limit);
     formData.set('partSpeech', this.#partSpeech);
 
     return new Promise((resolve, reject) => {
@@ -71,7 +75,7 @@ class Menu {
           Helper.rmClass(this.#topBtMenu, 'activeItem');
           this.#i--;
 
-          this.requestWordsFromDB(this.#skip, this.#limit)
+          this.requestWordsFromDB()
           .then(data => {
             this.#words = data;
             this.#card.resetCounter();
@@ -85,7 +89,7 @@ class Menu {
 
   init() {
     if (this.#words === null) {
-      this.requestWordsFromDB(this.#skip, this.#limit)
+      this.requestWordsFromDB()
       .then(data => {
         this.#words = data;
         this.#card.setWordToField(this.#words, this.#partSpeech);

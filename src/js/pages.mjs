@@ -47,8 +47,32 @@ class Pages {
   init(amountWords, menu, card) {
     this.#getCommonAmountWords(amountWords.getAmountWords());
 
+    Helper.setEvent(this.#currentPage, 'input', e => {
+      const target = e.target;
+      const page = Helper.getInt(Helper.getText(target));
+
+      if (isNaN(page)) return;
+
+      const total = Helper.getInt(Helper.getAttr(this.#totalPage, 'data-pages')); 
+
+      if (page > total) {
+        Helper.addText(target, total);
+        Helper.setAttr(target, 'data-page' , total);
+      } else if (page < 1) {
+        Helper.addText(target, 1);
+        Helper.setAttr(target, 'data-page' , 1);
+      } else {
+        Helper.addText(target, page);
+        Helper.setAttr(target, 'data-page' , page);
+      }
+    });
+
     Helper.setEvent(this.#currentPage, 'blur', e => {
-      console.log(Helper.getInt(Helper.getAttr(e.target, 'data-page')));
+      const page = Helper.getInt(Helper.getAttr(e.target, 'data-page'));
+      const skip = Helper.getInt(amountWords.getAmountWords()) * page;
+
+      // if ()
+      // menu.requestWordsFromDB();
     });
   }
 }

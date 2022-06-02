@@ -60,7 +60,7 @@ class AmountWords {
 
       menu.setLimit(this.#amount);
 
-      menu.requestWordsFromDB(menu.getSkip(), this.#amount)
+      menu.requestWordsFromDB()
       .then(data => {
         menu.setWords(data);
 
@@ -80,7 +80,8 @@ class AmountWords {
       this.#checkLimit(this.#amount);
       
       menu.setLimit(this.#amount);
-      menu.requestWordsFromDB(menu.getSkip(), this.#amount)
+
+      menu.requestWordsFromDB()
       .then(data => {
         menu.setWords(data);
 

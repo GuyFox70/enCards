@@ -4,6 +4,10 @@ class Helper {
     return document.createElement(elem);
   }
 
+  static getText(elem) {
+    return elem.innerHTML;
+  }
+
   static addText(elem, text) {
     elem.innerHTML = text;
   }
