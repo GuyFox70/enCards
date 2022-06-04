@@ -44,14 +44,27 @@ class Pages {
     }
   }
 
+  #setCaretAtStartEnd(node) {
+    const sel = document.getSelection();
+    node = node.firstChild;
+    sel.collapse(node, node.length);
+  }
+
   init(amountWords, menu, card) {
     this.#getCommonAmountWords(amountWords.getAmountWords());
 
     Helper.setEvent(this.#currentPage, 'input', e => {
       const target = e.target;
+      const text = Helper.getText(target);
       const page = Helper.getInt(Helper.getText(target));
 
-      if (isNaN(page)) return;
+      if (isNaN(page) && text !== '') {
+        Helper.addText(target, 1);
+        Helper.setAttr(target, 'data-page' , 1);
+        return;
+      } else if (text === '') {
+        return;
+      }
 
       const total = Helper.getInt(Helper.getAttr(this.#totalPage, 'data-pages')); 
 
@@ -65,6 +78,8 @@ class Pages {
         Helper.addText(target, page);
         Helper.setAttr(target, 'data-page' , page);
       }
+
+      this. #setCaretAtStartEnd(this.#currentPage);
     });
 
     Helper.setEvent(this.#currentPage, 'blur', e => {
