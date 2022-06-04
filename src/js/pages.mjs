@@ -18,6 +18,14 @@ class Pages {
     this.#setPagesField(Math.round(totalPages / portionWords));
   }
 
+  #getCurrentPage() {
+    return Helper.getInt(Helper.getAttr(this.#currentPage, 'data-page'));
+  }
+
+  #getTotalPage() {
+    return Helper.getInt(Helper.getAttr(this.#totalPage, 'data-pages'));
+  }
+
   #setPagesField(pages) {
     Helper.addText(this.#totalPage, pages);
     Helper.setAttr(this.#totalPage, 'data-pages', pages);
@@ -50,6 +58,22 @@ class Pages {
     sel.collapse(node, node.length);
   }
 
+  checkPage(page) {
+    const total = this.#getTotalPage();
+    const num = page || this.#getCurrentPage();
+
+    if (num > total) {
+      Helper.addText(this.#currentPage, total);
+      Helper.setAttr(this.#currentPage, 'data-page' , total);
+    } else if (num < 1) {
+      Helper.addText(this.#currentPage, 1);
+      Helper.setAttr(this.#currentPage, 'data-page' , 1);
+    } else {
+      Helper.addText(this.#currentPage, num);
+      Helper.setAttr(this.#currentPage, 'data-page', num);
+    }
+  }
+
   init(portionWords, menu, card, topButtons) {
     this.queryAmountWords(portionWords.getCurrentPortion());
 
@@ -58,7 +82,7 @@ class Pages {
     Helper.setEvent(this.#currentPage, 'input', e => {
       const target = e.target;
       const text = Helper.getText(target);
-      const page = Helper.getInt(Helper.getText(target));
+      const page = Helper.getInt(Helper.getText(this.#currentPage));
 
       if (isNaN(page) && text !== '') {
         Helper.addText(target, 1);
@@ -68,24 +92,13 @@ class Pages {
         return;
       }
 
-      const total = Helper.getInt(Helper.getAttr(this.#totalPage, 'data-pages')); 
+      this.checkPage(page);
 
-      if (page > total) {
-        Helper.addText(target, total);
-        Helper.setAttr(target, 'data-page' , total);
-      } else if (page < 1) {
-        Helper.addText(target, 1);
-        Helper.setAttr(target, 'data-page' , 1);
-      } else {
-        Helper.addText(target, page);
-        Helper.setAttr(target, 'data-page' , page);
-      }
-
-      this. #setCaretAtEnd(this.#currentPage);
+      this.#setCaretAtEnd(this.#currentPage);
     });
 
     Helper.setEvent(this.#currentPage, 'blur', e => {
-      const page = Helper.getInt(Helper.getAttr(e.target, 'data-page')) - 1;
+      const page = this.#getCurrentPage() - 1;
       const skip = Helper.getInt(portionWords.getCurrentPortion()) * page;
 
       menu.setSkip(skip);

@@ -63,7 +63,9 @@ class ProtionWords {
 
       this.#checkPortion(this.#currentPortion);
 
-      pages.calculateAmountPages(pages.getAmountParticularPartSpeech()[menu.getPartSpeech()], this.#currentPortion);
+      pages.calculateAmountPages(pages.getAmountWords()[menu.getPartSpeech()], this.#currentPortion);
+      menu.setSkip(0);
+      pages.checkPage(1);
 
       menu.setLimit(this.#currentPortion);
 
@@ -81,7 +83,9 @@ class ProtionWords {
       
       this.#checkPortion(this.#currentPortion);
 
-      pages.calculateAmountPages(pages.getAmountParticularPartSpeech()[menu.getPartSpeech()], this.#currentPortion);
+      pages.calculateAmountPages(pages.getAmountWords()[menu.getPartSpeech()], this.#currentPortion);
+      menu.setSkip(0);
+      pages.checkPage(1);
       
       menu.setLimit(this.#currentPortion);
 
