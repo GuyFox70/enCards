@@ -37,7 +37,7 @@ const jsFiles = [
   './src/js/helper.mjs',
   './src/js/menu.mjs',
   './src/js/pages.mjs',
-  './src/js/amountWords.mjs',
+  './src/js/portionWords.mjs',
   './src/js/card.mjs',
   './src/js/topButtons.mjs',
   './src/js/main.mjs',

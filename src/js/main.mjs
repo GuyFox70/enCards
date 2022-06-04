@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const card = new Card;
     const menu = new Menu(card);
     const pages = new Pages;
-    const amountWords = new AmountWords;
+    const protionWords = new ProtionWords;
     const topButtons = new TopButtons;
   
     menu.init();
-    pages.init(amountWords, menu, card, topButtons);
-    amountWords.init(card, menu, topButtons);
+    pages.init(protionWords, menu, card, topButtons);
+    protionWords.init(card, menu, topButtons, pages);
     card.init(menu);
     topButtons.init(menu, card);
   

@@ -156,13 +156,13 @@ body {
 .topNav__lang > label {
   cursor: pointer;
 }
-.topNav__item-amount {
+.topNav__item-portion-words {
   width: 16%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.topNav__item-amount > button {
+.topNav__item-portion-words > button {
   width: 30px;
   border: 1px solid rgba(255, 255, 255, 0);
   outline: 0;
@@ -171,15 +171,15 @@ body {
   color: white;
   cursor: pointer;
 }
-.topNav__item-amount > button:hover {
+.topNav__item-portion-words > button:hover {
   border: 1px solid #ffffff;
   transition: border .1s linear;
 }
-.topNav__item-amount > button:disabled {
+.topNav__item-portion-words > button:disabled {
   border: 1px solid rgba(255, 255, 255, 0);
   color: #d1d1d1;
 }
-.topNav__item-amount > div {
+.topNav__item-portion-words > div {
   display: flex;
 }
 .topNav__buttons {
