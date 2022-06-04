@@ -53,6 +53,8 @@ class Pages {
   init(amountWords, menu, card, topButtons) {
     this.#getCommonAmountWords(amountWords.getAmountWords());
 
+    Helper.setEvent(this.#currentPage, 'click', e => { Helper.setAttr(e.target, 'contenteditable', true), e.target.focus(); });
+
     Helper.setEvent(this.#currentPage, 'input', e => {
       const target = e.target;
       const text = Helper.getText(target);
