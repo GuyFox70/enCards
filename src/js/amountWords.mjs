@@ -47,6 +47,15 @@ class AmountWords {
     }
   }
 
+  isCard(card, menu, topButtons) {
+    if (!Helper.hasClass(card.getFlipCard(), 'hidden')) {
+      card.resetCounter();
+      card.setWordToField(menu.getWords(), menu.getPartSpeech());
+    } else {
+      topButtons.createTable(menu.getWords(), menu.getPartSpeech());
+    }
+  }
+
   init(card, menu, topButtons) {
     this.#checkLimit(this.#amount);
     Helper.addText(this.#amountField, this.#amount);
@@ -64,12 +73,7 @@ class AmountWords {
       .then(data => {
         menu.setWords(data);
 
-        if (!Helper.hasClass(card.getFlipCard(), 'hidden')) {
-          card.resetCounter();
-          card.setWordToField(menu.getWords(), menu.getPartSpeech());
-        } else {
-          topButtons.createTable(menu.getWords(), menu.getPartSpeech());
-        }
+        this.isCard(card, menu, topButtons);
       })
       .catch(err => { console.log(err), alert(err.message); });
     });
@@ -85,12 +89,7 @@ class AmountWords {
       .then(data => {
         menu.setWords(data);
 
-        if (!Helper.hasClass(card.getFlipCard(), 'hidden')) {
-          card.resetCounter();
-          card.setWordToField(menu.getWords(), menu.getPartSpeech());
-        } else {
-          topButtons.createTable(menu.getWords(), menu.getPartSpeech());
-        }
+        this.isCard(card, menu, topButtons);
       })
       .catch(err => { console.log(err), alert(err.message); });
     });

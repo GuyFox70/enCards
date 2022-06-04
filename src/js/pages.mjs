@@ -44,13 +44,13 @@ class Pages {
     }
   }
 
-  #setCaretAtStartEnd(node) {
+  #setCaretAtEnd(node) {
     const sel = document.getSelection();
     node = node.firstChild;
     sel.collapse(node, node.length);
   }
 
-  init(amountWords, menu, card) {
+  init(amountWords, menu, card, topButtons) {
     this.#getCommonAmountWords(amountWords.getAmountWords());
 
     Helper.setEvent(this.#currentPage, 'input', e => {
@@ -79,15 +79,25 @@ class Pages {
         Helper.setAttr(target, 'data-page' , page);
       }
 
-      this. #setCaretAtStartEnd(this.#currentPage);
+      this. #setCaretAtEnd(this.#currentPage);
     });
 
     Helper.setEvent(this.#currentPage, 'blur', e => {
-      const page = Helper.getInt(Helper.getAttr(e.target, 'data-page'));
+      const page = Helper.getInt(Helper.getAttr(e.target, 'data-page')) - 1;
       const skip = Helper.getInt(amountWords.getAmountWords()) * page;
 
-      // if ()
-      // menu.requestWordsFromDB();
+      menu.setSkip(skip);
+
+      menu.requestWordsFromDB()
+      .then(data => {
+        menu.setWords(data);
+
+        amountWords.isCard(card, menu, topButtons);
+      })
+      .catch(err => {
+        console.log(err);
+        alert(err.message);
+      })
     });
   }
 }

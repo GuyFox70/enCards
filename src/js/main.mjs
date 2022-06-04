@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const topButtons = new TopButtons;
   
     menu.init();
-    pages.init(amountWords, menu, card);
+    pages.init(amountWords, menu, card, topButtons);
     amountWords.init(card, menu, topButtons);
     card.init(menu);
     topButtons.init(menu, card);
