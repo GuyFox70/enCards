@@ -43,15 +43,6 @@ class ProtionWords {
     }
   }
 
-  isCard(card, menu, topButtons) {
-    if (!Helper.hasClass(card.getFlipCard(), 'hidden')) {
-      card.resetCounter();
-      card.setWordToField(menu.getWords(), menu.getPartSpeech());
-    } else {
-      topButtons.createTable(menu.getWords(), menu.getPartSpeech());
-    }
-  }
-
   init(card, menu, topButtons, pages) {
     this.#checkPortion(this.#currentPortion);
     Helper.addText(this.#portionField, this.#currentPortion);
@@ -73,7 +64,8 @@ class ProtionWords {
       .then(data => {
         menu.setWords(data);
 
-        this.isCard(card, menu, topButtons);
+        card.resetCounter();
+        card.isCard(menu, topButtons, topButtons.isEnglish());
       })
       .catch(err => { console.log(err), alert(err.message); });
     });
@@ -93,7 +85,8 @@ class ProtionWords {
       .then(data => {
         menu.setWords(data);
 
-        this.isCard(card, menu, topButtons);
+        card.resetCounter();
+        card.isCard(menu, topButtons, topButtons.isEnglish());
       })
       .catch(err => { console.log(err), alert(err.message); });
     });

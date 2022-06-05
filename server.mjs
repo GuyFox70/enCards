@@ -44,6 +44,7 @@ const server = createServer((req, res) => {
 
     if (!router) {
       logger.log(new Error(`Url ${ url } not found!`));
+      
       readFile(join(cwd, 'build/html/404.html'), properties)
       .then(result => {
         res

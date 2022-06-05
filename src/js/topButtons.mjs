@@ -5,14 +5,24 @@ class TopButtons {
   #activeItem;
   #table;
   #tbody;
+  #eng;
+  #rus;
+  #flagEng;
 
   constructor() {
+    this.#eng = Helper.getSelector('#eng');
+    this.#rus = Helper.getSelector('#rus');
     this.#btnStudeid = Helper.getSelector('#btnStudeid');
     this.#btnCard = Helper.getSelector('#btnCard');
     this.#btnTable = Helper.getSelector('#btnTable');
     this.#activeItem =  this.#btnCard;
     this.#table = Helper.getSelector('#table');
     this.#tbody = Helper.getSelector('#table .table__tbody');
+    this.#flagEng = 1;
+  }
+
+  isEnglish() {
+    return this.#flagEng;
   }
 
   #rmActive() {
@@ -61,6 +71,17 @@ class TopButtons {
   }
 
   init(menu, card) {
+    // Button English
+    Helper.setEvent(this.#eng, 'click', e => {
+      this.#flagEng = 1;
+      card.isCard(menu, this, this.#flagEng);
+    });
+    // Button Russain
+    Helper.setEvent(this.#rus, 'click', e => {
+      this.#flagEng = 0;
+      card.isCard(menu, this, this.#flagEng);
+    });
+    // Button Studied
     Helper.setEvent(this.#btnStudeid, 'click', e => {
       if (!Helper.hasClass(this.#btnStudeid, 'activeItem')) {
         this.#rmActive();
@@ -68,7 +89,7 @@ class TopButtons {
         this.#activeItem = this.#btnStudeid;
       }
     });
-
+    // Button Card
     Helper.setEvent(this.#btnCard, 'click', e => {
       if (!Helper.hasClass(this.#btnCard, 'activeItem')) {
         this.#rmActive();
@@ -83,7 +104,7 @@ class TopButtons {
         this.#activeItem = this.#btnCard;
       }
     });
-
+    // Button Table
     Helper.setEvent(this.#btnTable, 'click', e => {
       if (!Helper.hasClass(this.#btnTable, 'activeItem')) {
         Helper.addClass(card.getFlipCard(), 'hidden');

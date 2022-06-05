@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   try {
     const card = new Card;
-    const menu = new Menu(card);
+    const menu = new Menu();
     const pages = new Pages;
     const protionWords = new ProtionWords;
     const topButtons = new TopButtons;
   
-    menu.init();
+    menu.init(topButtons, card);
     pages.init(protionWords, menu, card, topButtons);
     protionWords.init(card, menu, topButtons, pages);
-    card.init(menu);
+    card.init(menu, topButtons);
     topButtons.init(menu, card);
   
     // window.addEventListener('beforeunload', () => {

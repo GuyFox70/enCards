@@ -7,9 +7,8 @@ class Menu {
   #words;
   #limit;
   #skip;
-  #card;
 
-  constructor(card) {
+  constructor() {
     this.#menuItem = Helper.getSelectorAll('.menu__item');
     this.#topBtMenu = Helper.getSelector('#topBtMenu');
     this.#menu = Helper.getSelector('#menu');
@@ -18,7 +17,6 @@ class Menu {
     this.#words = Helper.fromJson(localStorage.getItem('words')) || null;
     this.#skip = Helper.getInt(localStorage.getItem('skip')) || 0;
     this.#limit = Helper.getInt(localStorage.getItem('limit')) || 100;
-    this.#card = card;
   }
 
   getSkip() {
@@ -62,7 +60,7 @@ class Menu {
     });
   }
 
-  #addEventItemsMenu() {
+  #addEventItemsMenu(card) {
     for (const item of this.#menuItem) {
       Helper.setEvent(item, 'click', () => {
         if (this.#partSpeech !== Helper.getAttr(item, 'data-partSpeech')) {
@@ -78,8 +76,8 @@ class Menu {
           this.requestWordsFromDB()
           .then(data => {
             this.#words = data;
-            this.#card.resetCounter();
-            this.#card.setWordToField(this.#words, this.#partSpeech);
+            card.resetCounter();
+            card.setWordToField(this.#words, this.#partSpeech);
           })
           .catch(err => { console.log(err), alert(err.message); });
         }
@@ -87,19 +85,19 @@ class Menu {
     }
   }
 
-  init() {
+  init(topButtons, card) {
     if (this.#words === null) {
       this.requestWordsFromDB()
       .then(data => {
         this.#words = data;
-        this.#card.setWordToField(this.#words, this.#partSpeech);
+        card.setWordToField(this.#words, this.#partSpeech, topButtons.isEnglish());
       })
       .catch(err => { console.log(err), alert(err.message); });
     } else {
-      this.#card.setWordToField(this.#words, this.#partSpeech);
+      card.setWordToField(this.#words, this.#partSpeech, topButtons.isEnglish());
     }
 
-    this.#addEventItemsMenu();
+    this.#addEventItemsMenu(card);
 
     Helper.setEvent(this.#topBtMenu, 'click', () => {
       if (!this.#i) {

@@ -1,12 +1,11 @@
 class Card {
   #flipCard;
   #flipCardInner;
-  #eng;
   #mistakeReport;
   #btnsendReport;
   #btnCancelReport;
   #btnPrev;
-  #btnKnow;
+  #btnStudied;
   #btnNext;
   #i;
   #j;
@@ -15,12 +14,11 @@ class Card {
 
   constructor() {
     this.#flipCard = Helper.getSelector('#flipCard');
-    this.#eng = Helper.getSelector('#eng');
     this.#mistakeReport = Helper.getSelector('#mistakeReport');
     this.#btnsendReport = Helper.getSelector('#sendReport');
     this.#btnCancelReport = Helper.getSelector('#cancelReport');
     this.#btnPrev = Helper.getSelector('#prevWord');
-    this.#btnKnow = Helper.getSelector('#knowWord');
+    this.#btnStudied = Helper.getSelector('#studied');
     this.#btnNext = Helper.getSelector('#nextWord');
     this.#wordField = Helper.getSelector('#wordField');
     this.#translateField = Helper.getSelector('#translateField');
@@ -46,20 +44,28 @@ class Card {
     this.#i = 0;
   }
 
-  setWordToField(words, partSpeech) {
+  setWordToField(words, partSpeech, isEng) {
     setTimeout(() => {
       if (words === null || words.length === 0) {
         alert('Empty');
-        Helper.addText(this.#wordField, 'Example');
-        Helper.addText(this.#translateField, 'Пример');
+        Helper.addText(this.#wordField, '-------');
+        Helper.addText(this.#translateField, '-------');
       } else {
-        Helper.addText(this.#wordField, words[this.#i].word);
-        Helper.addText(this.#translateField, words[this.#i].translate[partSpeech].join(', '));
+        Helper.addText(this.#wordField, isEng ? words[this.#i].word : words[this.#i].translate[partSpeech].join(', '));
+        Helper.addText(this.#translateField, isEng ? words[this.#i].translate[partSpeech].join(', ') : words[this.#i].word);
       }
     }, 0);
   }
 
-  init(menu) {
+  isCard(menu, topButtons, isEng) {
+    if (!Helper.hasClass(this.#flipCard, 'hidden')) {
+      this.setWordToField(menu.getWords(), menu.getPartSpeech(), isEng);
+    } else {
+      topButtons.createTable(menu.getWords(), menu.getPartSpeech());
+    }
+  }
+
+  init(menu, topButtons) {
     Helper.setEvent(this.#flipCard, 'click', e => {
       if (!this.#j) {
         Helper.addClass(this.#flipCardInner, 'flip-card__inner-back');
@@ -79,10 +85,10 @@ class Card {
         this.#i = menu.getLimit() - 1;
       }
 
-      this.setWordToField(menu.getWords(), menu.getPartSpeech());
+      this.setWordToField(menu.getWords(), menu.getPartSpeech(), topButtons.isEnglish());
     });
 
-    Helper.setEvent(this.#btnKnow, 'click', e => {
+    Helper.setEvent(this.#btnStudied, 'click', e => {
       e.stopPropagation();
       console.log('push');
     });
@@ -96,7 +102,7 @@ class Card {
         this.#i = 0;
       }
 
-     this.setWordToField(menu.getWords(), menu.getPartSpeech());
+     this.setWordToField(menu.getWords(), menu.getPartSpeech(), topButtons.isEnglish());
     });
   }
 }

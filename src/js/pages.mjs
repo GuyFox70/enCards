@@ -107,7 +107,8 @@ class Pages {
       .then(data => {
         menu.setWords(data);
 
-        portionWords.isCard(card, menu, topButtons);
+        card.resetCounter();
+        card.isCard(menu, topButtons);
       })
       .catch(err => {
         console.log(err);
