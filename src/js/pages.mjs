@@ -101,19 +101,40 @@ class Pages {
       const page = this.#getCurrentPage() - 1;
       const skip = Helper.getInt(portionWords.getCurrentPortion()) * page;
 
+      Helper.setAttr(e.target, 'contenteditable', false);
+
       menu.setSkip(skip);
 
-      menu.requestWordsFromDB()
-      .then(data => {
-        menu.setWords(data);
+      getWords.call(null, menu, card, topButtons);
+    });
 
-        card.resetCounter();
-        card.isCard(menu, topButtons);
-      })
-      .catch(err => {
-        console.log(err);
-        alert(err.message);
-      })
+    Helper.setEvent(this.#currentPage, 'keydown', e => {
+      const code = e.keyCode;
+
+      if (code === 13) {
+        const page = this.#getCurrentPage() - 1;
+        const skip = Helper.getInt(portionWords.getCurrentPortion()) * page;
+
+        Helper.setAttr(e.target, 'contenteditable', false);
+
+        menu.setSkip(skip);
+
+        getWords.call(null, menu, card, topButtons);
+      }
     });
   }
+}
+
+function getWords(menu, card, topButtons) {
+  menu.requestWordsFromDB()
+  .then(data => {
+    menu.setWords(data);
+
+    card.resetCounter();
+    card.isCard(menu, topButtons);
+  })
+  .catch(err => {
+    console.log(err);
+    alert(err.message);
+  });
 }

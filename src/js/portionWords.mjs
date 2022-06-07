@@ -65,7 +65,7 @@ class ProtionWords {
         menu.setWords(data);
 
         card.resetCounter();
-        card.isCard(menu, topButtons, topButtons.isEnglish());
+        card.isCard(menu, topButtons);
       })
       .catch(err => { console.log(err), alert(err.message); });
     });
@@ -86,7 +86,7 @@ class ProtionWords {
         menu.setWords(data);
 
         card.resetCounter();
-        card.isCard(menu, topButtons, topButtons.isEnglish());
+        card.isCard(menu, topButtons);
       })
       .catch(err => { console.log(err), alert(err.message); });
     });

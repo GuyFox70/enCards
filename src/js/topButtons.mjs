@@ -8,6 +8,7 @@ class TopButtons {
   #eng;
   #rus;
   #flagEng;
+  #flagMode;
 
   constructor() {
     this.#eng = Helper.getSelector('#eng');
@@ -19,6 +20,7 @@ class TopButtons {
     this.#table = Helper.getSelector('#table');
     this.#tbody = Helper.getSelector('#table .table__tbody');
     this.#flagEng = 1;
+    this.#flagMode = 2;
   }
 
   isEnglish() {
@@ -33,41 +35,39 @@ class TopButtons {
     Helper.addText(this.#tbody, '');
     if (words === null || words.length === 0) return;
 
-      if (!Helper.hasClass(this.#table, 'hidden')) {
-        this.#rmActive();
-        Helper.addClass(this.#btnTable, 'activeItem');
+    this.#rmActive();
+    Helper.addClass(this.#btnTable, 'activeItem');
 
-        for (let i = 0; i < words.length; i++) {
-          const item =words[i];
+    for (let i = 0; i < words.length; i++) {
+      const item =words[i];
 
-          const tr = Helper.createElement('div');
-          Helper.addClass(tr, 'table__tr');
+      const tr = Helper.createElement('div');
+      Helper.addClass(tr, 'table__tr');
 
-          const tdNum = Helper.createElement('td');
-          Helper.addClass(tdNum, [ 'table__td', 'cell__number' ]);
-          Helper.addText(tdNum, i + 1);
-          tr.appendChild(tdNum);
+      const tdNum = Helper.createElement('td');
+      Helper.addClass(tdNum, [ 'table__td', 'cell__number' ]);
+      Helper.addText(tdNum, i + 1);
+      tr.appendChild(tdNum);
 
-          const tdWord = Helper.createElement('td');
-          Helper.addClass(tdWord, [ 'table__td', 'cell__word' ]);
-          Helper.addText(tdWord, item.word);
-          tr.appendChild(tdWord);
+      const tdWord = Helper.createElement('td');
+      Helper.addClass(tdWord, [ 'table__td', 'cell__word' ]);
+      Helper.addText(tdWord, item.word);
+      tr.appendChild(tdWord);
 
-          const tdTranscription = Helper.createElement('td');
-          Helper.addClass(tdTranscription, [ 'table__td', 'cell__transcription' ]);
-          Helper.addText(tdTranscription, item.transcription);
-          tr.appendChild(tdTranscription);
+      const tdTranscription = Helper.createElement('td');
+      Helper.addClass(tdTranscription, [ 'table__td', 'cell__transcription' ]);
+      Helper.addText(tdTranscription, item.transcription);
+      tr.appendChild(tdTranscription);
 
-          const tdTranslate = Helper.createElement('td');
-          Helper.addClass(tdTranslate, [ 'table__td', 'cell__translate' ]);
-          Helper.addText(tdTranslate, item.translate[ partSpeech ].join(', '));
-          tr.appendChild(tdTranslate);
+      const tdTranslate = Helper.createElement('td');
+      Helper.addClass(tdTranslate, [ 'table__td', 'cell__translate' ]);
+      Helper.addText(tdTranslate, item.translate[ partSpeech ].join(', '));
+      tr.appendChild(tdTranslate);
 
-          this.#tbody.appendChild(tr);
-        }
+      this.#tbody.appendChild(tr);
+    }
 
-        this.#activeItem = this.#btnTable;
-      }
+    this.#activeItem = this.#btnTable;
   }
 
   init(menu, card) {
@@ -83,34 +83,40 @@ class TopButtons {
     });
     // Button Studied
     Helper.setEvent(this.#btnStudeid, 'click', e => {
-      if (!Helper.hasClass(this.#btnStudeid, 'activeItem')) {
+      if (this.#flagMode !== 1) {
         this.#rmActive();
         Helper.addClass(this.#btnStudeid, 'activeItem');
         this.#activeItem = this.#btnStudeid;
+
+        this.#flagMode = 1;
       }
     });
     // Button Card
     Helper.setEvent(this.#btnCard, 'click', e => {
-      if (!Helper.hasClass(this.#btnCard, 'activeItem')) {
+      if (this.#flagMode !== 2) {
         this.#rmActive();
         Helper.addClass(this.#btnCard, 'activeItem');
 
         card.resetCounter();
-        card.setWordToField(menu.getWords(), menu.getPartSpeech());
+        card.setWordToField(menu.getWords(), menu.getPartSpeech(), this.#flagEng);
 
         Helper.addClass(this.#table, 'hidden');
         Helper.rmClass(card.getFlipCard(), 'hidden');
 
         this.#activeItem = this.#btnCard;
+
+        this.#flagMode = 2;
       }
     });
     // Button Table
     Helper.setEvent(this.#btnTable, 'click', e => {
-      if (!Helper.hasClass(this.#btnTable, 'activeItem')) {
+      if (this.#flagMode !== 3) {
         Helper.addClass(card.getFlipCard(), 'hidden');
         Helper.rmClass(this.#table, 'hidden');
 
         this.createTable(menu.getWords(), menu.getPartSpeech());
+
+        this.#flagMode = 3;
       }
     });
   }

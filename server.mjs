@@ -33,7 +33,7 @@ const convert = {
   array: arr => JSON.stringify(arr),
 };
 
-const server = createServer((req, res) => {
+const server = createServer(async (req, res) => {
   const { url } = req;
   if (url.endsWith('.ico')) {
     getFiles(res, url === '/favicon.ico' ? '/images/favicon.ico' : url);

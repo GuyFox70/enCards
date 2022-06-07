@@ -57,9 +57,9 @@ class Card {
     }, 0);
   }
 
-  isCard(menu, topButtons, isEng) {
+  isCard(menu, topButtons) {
     if (!Helper.hasClass(this.#flipCard, 'hidden')) {
-      this.setWordToField(menu.getWords(), menu.getPartSpeech(), isEng);
+      this.setWordToField(menu.getWords(), menu.getPartSpeech(), topButtons.isEnglish());
     } else {
       topButtons.createTable(menu.getWords(), menu.getPartSpeech());
     }
