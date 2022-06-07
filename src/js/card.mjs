@@ -11,6 +11,7 @@ class Card {
   #j;
   #wordField;
   #translateField;
+  #studied;
 
   constructor() {
     this.#flipCard = Helper.getSelector('#flipCard');
@@ -26,6 +27,7 @@ class Card {
 
     this.#i = 0;
     this.#j = 0;
+    this.#studied = Helper.fromJson(localStorage.getItem('studied')) || [];
   }
 
   getFlipCard() {
@@ -57,14 +59,6 @@ class Card {
     }, 0);
   }
 
-  isCard(menu, topButtons) {
-    if (!Helper.hasClass(this.#flipCard, 'hidden')) {
-      this.setWordToField(menu.getWords(), menu.getPartSpeech(), topButtons.isEnglish());
-    } else {
-      topButtons.createTable(menu.getWords(), menu.getPartSpeech());
-    }
-  }
-
   init(menu, topButtons) {
     Helper.setEvent(this.#flipCard, 'click', e => {
       if (!this.#j) {
@@ -85,12 +79,14 @@ class Card {
         this.#i = menu.getLimit() - 1;
       }
 
-      this.setWordToField(menu.getWords(), menu.getPartSpeech(), topButtons.isEnglish());
+      this.setWordToField(menu.getArrWords(), menu.getPartSpeech(), topButtons.isEnglish());
     });
 
     Helper.setEvent(this.#btnStudied, 'click', e => {
       e.stopPropagation();
-      console.log('push');
+
+
+      console.log('push', menu.getArrWords());
     });
 
     Helper.setEvent(this.#btnNext, 'click', e => {
@@ -102,7 +98,7 @@ class Card {
         this.#i = 0;
       }
 
-     this.setWordToField(menu.getWords(), menu.getPartSpeech(), topButtons.isEnglish());
+     this.setWordToField(menu.getArrWords(), menu.getPartSpeech(), topButtons.isEnglish());
     });
   }
 }

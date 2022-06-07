@@ -31,7 +31,7 @@ class Menu {
     return this.#partSpeech;
   }
 
-  getWords() {
+  getArrWords() {
     return this.#words;
   }
 
@@ -60,7 +60,7 @@ class Menu {
     });
   }
 
-  #addEventItemsMenu(card) {
+  #addEventItemsMenu(card, topButtons) {
     for (const item of this.#menuItem) {
       Helper.setEvent(item, 'click', () => {
         if (this.#partSpeech !== Helper.getAttr(item, 'data-partSpeech')) {
@@ -77,7 +77,7 @@ class Menu {
           .then(data => {
             this.#words = data;
             card.resetCounter();
-            card.setWordToField(this.#words, this.#partSpeech);
+            topButtons.isCard(this, card);
           })
           .catch(err => { console.log(err), alert(err.message); });
         }
@@ -97,7 +97,7 @@ class Menu {
       card.setWordToField(this.#words, this.#partSpeech, topButtons.isEnglish());
     }
 
-    this.#addEventItemsMenu(card);
+    this.#addEventItemsMenu(card, topButtons);
 
     Helper.setEvent(this.#topBtMenu, 'click', () => {
       if (!this.#i) {

@@ -43,7 +43,7 @@ class ProtionWords {
     }
   }
 
-  init(card, menu, topButtons, pages) {
+  init(card, menu, topButtons, pages, getWords) {
     this.#checkPortion(this.#currentPortion);
     Helper.addText(this.#portionField, this.#currentPortion);
 
@@ -60,14 +60,7 @@ class ProtionWords {
 
       menu.setLimit(this.#currentPortion);
 
-      menu.requestWordsFromDB()
-      .then(data => {
-        menu.setWords(data);
-
-        card.resetCounter();
-        card.isCard(menu, topButtons);
-      })
-      .catch(err => { console.log(err), alert(err.message); });
+      getWords.call(null, menu, card, topButtons);
     });
 
     Helper.setEvent(this.#prevPortion, 'click', () => {
@@ -81,14 +74,7 @@ class ProtionWords {
       
       menu.setLimit(this.#currentPortion);
 
-      menu.requestWordsFromDB()
-      .then(data => {
-        menu.setWords(data);
-
-        card.resetCounter();
-        card.isCard(menu, topButtons);
-      })
-      .catch(err => { console.log(err), alert(err.message); });
+      getWords.call(null, menu, card, topButtons);
     });
   }
 }

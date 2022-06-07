@@ -74,7 +74,7 @@ class Pages {
     }
   }
 
-  init(portionWords, menu, card, topButtons) {
+  init(portionWords, menu, card, topButtons, getWords) {
     this.queryAmountWords(portionWords.getCurrentPortion());
 
     Helper.setEvent(this.#currentPage, 'click', e => { Helper.setAttr(e.target, 'contenteditable', true), e.target.focus(); });
@@ -123,18 +123,4 @@ class Pages {
       }
     });
   }
-}
-
-function getWords(menu, card, topButtons) {
-  menu.requestWordsFromDB()
-  .then(data => {
-    menu.setWords(data);
-
-    card.resetCounter();
-    card.isCard(menu, topButtons);
-  })
-  .catch(err => {
-    console.log(err);
-    alert(err.message);
-  });
 }
