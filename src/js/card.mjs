@@ -11,7 +11,6 @@ class Card {
   #j;
   #wordField;
   #translateField;
-  #studied;
 
   constructor() {
     this.#flipCard = Helper.getSelector('#flipCard');
@@ -27,7 +26,6 @@ class Card {
 
     this.#i = 0;
     this.#j = 0;
-    this.#studied = Helper.fromJson(localStorage.getItem('studied')) || [];
   }
 
   getFlipCard() {
@@ -85,8 +83,16 @@ class Card {
     Helper.setEvent(this.#btnStudied, 'click', e => {
       e.stopPropagation();
 
+      menu.pushToStudied(this.#i);
 
-      console.log('push', menu.getArrWords());
+      const words = menu.getArrWords().filter((elem, index) => { if (index !== this.#i) return elem; });
+      const length = words.length - 1;
+
+      if (this.#i > length) this.#i = length;
+
+      menu.overwriteWords(words);
+
+      this.setWordToField(menu.getArrWords(), menu.getPartSpeech(), topButtons.isEnglish());
     });
 
     Helper.setEvent(this.#btnNext, 'click', e => {
