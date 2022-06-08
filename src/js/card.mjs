@@ -57,7 +57,7 @@ class Card {
     }, 0);
   }
 
-  init(menu, topButtons) {
+  init(menu, topButtons, portionWords, pages, getWords) {
     Helper.setEvent(this.#flipCard, 'click', e => {
       if (!this.#j) {
         Helper.addClass(this.#flipCardInner, 'flip-card__inner-back');
@@ -86,13 +86,23 @@ class Card {
       menu.pushToStudied(this.#i);
 
       const words = menu.getArrWords().filter((elem, index) => { if (index !== this.#i) return elem; });
-      const length = words.length - 1;
+      const length = words.length;
 
-      if (this.#i > length) this.#i = length;
+      if (this.#i >= length) this.#i = length === 0 ? length : length - 1;
 
-      menu.overwriteWords(words);
+      if (length === 0) {
+        const calculateSkip = () => Helper.getInt(portionWords.getCurrentPortion()) * (pages.getCurrentPage() - 1);
+        const skip = calculateSkip();
+        
+        // menu.setSkip(skip);
 
-      this.setWordToField(menu.getArrWords(), menu.getPartSpeech(), topButtons.isEnglish());
+        // getWords.call(null, menu, this, topButtons);
+      } else {
+        menu.overwriteWords(words);
+        this.setWordToField(menu.getArrWords(), menu.getPartSpeech(), topButtons.isEnglish());
+      }
+
+
     });
 
     Helper.setEvent(this.#btnNext, 'click', e => {

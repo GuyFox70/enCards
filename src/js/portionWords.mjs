@@ -1,4 +1,4 @@
-class ProtionWords {
+class PortionWords {
   #portionField;
   #nextPortion;
   #prevPortion;

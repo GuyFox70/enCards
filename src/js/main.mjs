@@ -12,15 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const card = new Card;
-    const menu = new Menu();
+    const menu = new Menu;
     const pages = new Pages;
-    const protionWords = new ProtionWords;
+    const portionWords = new PortionWords;
     const topButtons = new TopButtons;
   
     menu.init(topButtons, card);
-    pages.init(protionWords, menu, card, topButtons, getWords);
-    protionWords.init(card, menu, topButtons, pages, getWords);
-    card.init(menu, topButtons);
+    pages.init(portionWords, menu, card, topButtons, getWords);
+    portionWords.init(card, menu, topButtons, pages, getWords);
+    card.init(menu, topButtons, portionWords, pages, getWords);
     topButtons.init(menu, card);
   
     // window.addEventListener('beforeunload', () => {

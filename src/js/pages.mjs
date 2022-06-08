@@ -18,7 +18,7 @@ class Pages {
     this.#setPagesField(Math.round(totalPages / portionWords));
   }
 
-  #getCurrentPage() {
+  getCurrentPage() {
     return Helper.getInt(Helper.getAttr(this.#currentPage, 'data-page'));
   }
 
@@ -60,7 +60,7 @@ class Pages {
 
   checkPage(page) {
     const total = this.#getTotalPage();
-    const num = page || this.#getCurrentPage();
+    const num = page || this.getCurrentPage();
 
     if (num > total) {
       Helper.addText(this.#currentPage, total);
@@ -75,6 +75,8 @@ class Pages {
   }
 
   init(portionWords, menu, card, topButtons, getWords) {
+    const calculateSkip = () => Helper.getInt(portionWords.getCurrentPortion()) * (this.getCurrentPage() - 1);
+
     this.queryAmountWords(portionWords.getCurrentPortion());
 
     Helper.setEvent(this.#currentPage, 'click', e => { Helper.setAttr(e.target, 'contenteditable', true), e.target.focus(); });
@@ -98,12 +100,9 @@ class Pages {
     });
 
     Helper.setEvent(this.#currentPage, 'blur', e => {
-      const page = this.#getCurrentPage() - 1;
-      const skip = Helper.getInt(portionWords.getCurrentPortion()) * page;
-
       Helper.setAttr(e.target, 'contenteditable', false);
 
-      menu.setSkip(skip);
+      menu.setSkip(calculateSkip());
 
       getWords.call(null, menu, card, topButtons);
     });
@@ -112,12 +111,9 @@ class Pages {
       const code = e.keyCode;
 
       if (code === 13) {
-        const page = this.#getCurrentPage() - 1;
-        const skip = Helper.getInt(portionWords.getCurrentPortion()) * page;
-
         Helper.setAttr(e.target, 'contenteditable', false);
 
-        menu.setSkip(skip);
+        menu.setSkip(calculateSkip());
 
         getWords.call(null, menu, card, topButtons);
       }
