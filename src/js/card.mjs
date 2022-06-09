@@ -44,6 +44,15 @@ class Card {
     this.#i = 0;
   }
 
+  setPage(pages, portionWords, page) {
+    const calculateSkip = page => Helper.getInt(portionWords.getCurrentPortion()) * (page - 1);
+  
+    Helper.addText(pages.getCurrentPageDOM(), page);
+    Helper.setAttr(pages.getCurrentPageDOM(), 'data-page', page);
+  
+    return calculateSkip(page);
+  }
+
   setWordToField(words, partSpeech, isEng) {
     setTimeout(() => {
       if (words === null || words.length === 0) {
@@ -91,18 +100,28 @@ class Card {
       if (this.#i >= length) this.#i = length === 0 ? length : length - 1;
 
       if (length === 0) {
-        const calculateSkip = () => Helper.getInt(portionWords.getCurrentPortion()) * (pages.getCurrentPage() - 1);
-        const skip = calculateSkip();
-        
-        // menu.setSkip(skip);
+        const agree = confirm('Do you want to get the next portion of words?');
 
-        // getWords.call(null, menu, this, topButtons);
+        if (agree) {
+          const skip = this.setPage(pages, portionWords, pages.getCurrentPageValue() + 1);
+
+          menu.setSkip(skip);
+          getWords.call(null, menu, this, topButtons);
+
+          this.#btnStudied.length = 0;
+        } else {
+          const skip = this.setPage(pages, portionWords, pages.getCurrentPageValue());
+
+          menu.setSkip(skip);
+          getWords.call(null, menu, this, topButtons);
+
+          this.#btnStudied.length = 0;
+        }
+
       } else {
         menu.overwriteWords(words);
         this.setWordToField(menu.getArrWords(), menu.getPartSpeech(), topButtons.isEnglish());
       }
-
-
     });
 
     Helper.setEvent(this.#btnNext, 'click', e => {

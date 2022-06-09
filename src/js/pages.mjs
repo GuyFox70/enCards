@@ -18,8 +18,12 @@ class Pages {
     this.#setPagesField(Math.round(totalPages / portionWords));
   }
 
-  getCurrentPage() {
+  getCurrentPageValue() {
     return Helper.getInt(Helper.getAttr(this.#currentPage, 'data-page'));
+  }
+
+  getCurrentPageDOM() {
+    return this.#currentPage;
   }
 
   #getTotalPage() {
@@ -60,7 +64,7 @@ class Pages {
 
   checkPage(page) {
     const total = this.#getTotalPage();
-    const num = page || this.getCurrentPage();
+    const num = page || this.getCurrentPageValue();
 
     if (num > total) {
       Helper.addText(this.#currentPage, total);
@@ -75,7 +79,7 @@ class Pages {
   }
 
   init(portionWords, menu, card, topButtons, getWords) {
-    const calculateSkip = () => Helper.getInt(portionWords.getCurrentPortion()) * (this.getCurrentPage() - 1);
+    const calculateSkip = () => Helper.getInt(portionWords.getCurrentPortion()) * (this.getCurrentPageValue() - 1);
 
     this.queryAmountWords(portionWords.getCurrentPortion());
 
