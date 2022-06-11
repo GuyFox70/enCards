@@ -84,6 +84,17 @@ class TopButtons {
     }
   }
 
+  #setActiveItem(item) {
+    this.#rmActive();
+    Helper.addClass(item, 'activeItem');
+    this.#activeItem = item;
+  }
+
+  #showHiddenElement(show, hidden) {
+    Helper.rmClass(show, 'hidden');
+    Helper.addClass(hidden, 'hidden');
+  }
+
   init(menu, card) {
     // Button English
     Helper.setEvent(this.#eng, 'click', e => {
@@ -97,10 +108,12 @@ class TopButtons {
     });
     // Button Studied
     Helper.setEvent(this.#btnStudeid, 'click', e => {
-      if (this.#flagMode !== 1) {
-        this.#rmActive();
-        Helper.addClass(this.#btnStudeid, 'activeItem');
-        this.#activeItem = this.#btnStudeid;
+      if (this.#flagMode !== 1) { 
+        this.#setActiveItem(this.#btnStudeid);
+
+        this.#showHiddenElement(this.#table, card.getFlipCard());
+
+        this.createTable(menu.getStudiedWords(), menu.getPartSpeech());
 
         this.#flagMode = 1;
       }
@@ -108,16 +121,12 @@ class TopButtons {
     // Button Card
     Helper.setEvent(this.#btnCard, 'click', e => {
       if (this.#flagMode !== 2) {
-        this.#rmActive();
-        Helper.addClass(this.#btnCard, 'activeItem');
+        this.#setActiveItem(this.#btnCard);
 
         card.resetCounter();
         card.setWordToField(menu.getArrWords(), menu.getPartSpeech(), this.#flagEng);
 
-        Helper.addClass(this.#table, 'hidden');
-        Helper.rmClass(card.getFlipCard(), 'hidden');
-
-        this.#activeItem = this.#btnCard;
+        this.#showHiddenElement(card.getFlipCard(), this.#table);
 
         this.#flagMode = 2;
       }
@@ -125,8 +134,9 @@ class TopButtons {
     // Button Table
     Helper.setEvent(this.#btnTable, 'click', e => {
       if (this.#flagMode !== 3) {
-        Helper.addClass(card.getFlipCard(), 'hidden');
-        Helper.rmClass(this.#table, 'hidden');
+        this.#setActiveItem(this.#btnTable);
+
+        this.#showHiddenElement(this.#table, card.getFlipCard());
 
         this.createTable(menu.getArrWords(), menu.getPartSpeech());
 
