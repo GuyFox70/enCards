@@ -98,17 +98,22 @@ class TopButtons {
   init(menu, card) {
     // Button English
     Helper.setEvent(this.#eng, 'click', e => {
+      if (this.#flagMode !== 2) return;
       this.#flagEng = 1;
       this.isCard(menu, card);
     });
     // Button Russain
     Helper.setEvent(this.#rus, 'click', e => {
+      if (this.#flagMode !== 2) return;
       this.#flagEng = 0;
       this.isCard(menu, card);
     });
     // Button Studied
     Helper.setEvent(this.#btnStudeid, 'click', e => {
       if (this.#flagMode !== 1) { 
+        Helper.setAttr(this.#eng, 'disabled', true);
+        Helper.setAttr(this.#rus, 'disabled', true);
+
         this.#setActiveItem(this.#btnStudeid);
 
         this.#showHiddenElement(this.#table, card.getFlipCard());
@@ -121,6 +126,9 @@ class TopButtons {
     // Button Card
     Helper.setEvent(this.#btnCard, 'click', e => {
       if (this.#flagMode !== 2) {
+        Helper.rmAttr(this.#eng, 'disabled');
+        Helper.rmAttr(this.#rus, 'disabled');
+
         this.#setActiveItem(this.#btnCard);
 
         card.resetCounter();
@@ -134,6 +142,8 @@ class TopButtons {
     // Button Table
     Helper.setEvent(this.#btnTable, 'click', e => {
       if (this.#flagMode !== 3) {
+        Helper.setAttr(this.#eng, 'disabled', true);
+        Helper.setAttr(this.#rus, 'disabled', true);
         this.#setActiveItem(this.#btnTable);
 
         this.#showHiddenElement(this.#table, card.getFlipCard());

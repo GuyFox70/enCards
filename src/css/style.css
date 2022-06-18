@@ -155,7 +155,7 @@ body {
   background: url("/images/disabledLang.svg") no-repeat center;
 }
 .topNav__lang > input[type="radio"]:disabled + label {
-  color: #C8C8C8;
+  color: #e7e7e7;
 }
 .topNav__lang > label {
   cursor: pointer;
