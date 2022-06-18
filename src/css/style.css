@@ -129,8 +129,8 @@ body {
 .topNav__lang > input[type="radio"] {
   appearance: none;
   position: relative;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   margin: 0 7px 0 0;
 }
@@ -139,23 +139,28 @@ body {
   content: "";
   width: 100%;
   height: 100%;
-  background: white;
+  background: url("/images/uncheckedLang.svg") no-repeat center;
   border-radius: 50%;
   position: absolute;
   top: 0;
   left: 0;
 }
 .topNav__lang > input[type="radio"]:checked::after {
-  background: radial-gradient(circle, #00c000 47%, #ffffff 47%);
+  background: url("/images/checkedLang.svg") no-repeat center;
 }
 .topNav__lang > input[type="radio"]:disabled:checked::after {
-  background: radial-gradient(circle, #93b893 47%, #ffffff 47%);
+  background: url("/images/disabledCheckedLang.svg") no-repeat center;
+}
+.topNav__lang > input[type="radio"]:disabled::after {
+  background: url("/images/disabledLang.svg") no-repeat center;
 }
 .topNav__lang > input[type="radio"]:disabled + label {
-  color: #ededed;
+  color: #C8C8C8;
 }
 .topNav__lang > label {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 .topNav__item-portion-words {
   width: 16%;
