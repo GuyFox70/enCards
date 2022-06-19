@@ -504,6 +504,29 @@ body {
 .cell__translate {
   width: 45%;
 }
+.tableSettings {
+  position: fixed;
+  bottom: 7px;
+  right: 5px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7), -2px -2px 4px rgba(0, 0, 0, 0.7);
+}
+.tableSettings > img {
+  max-width: 100%;
+  max-height: 100%;
+  transform: rotate(0deg);
+  transition: transform .1s linear;
+}
+.tableSettings:hover > img {
+  transform: rotate(60deg);
+  transition: transform .1s linear;
+}
 @media print {
   html {
     transform: scale(1);
