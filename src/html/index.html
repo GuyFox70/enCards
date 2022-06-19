@@ -89,66 +89,33 @@
             </ul>
           </div>
         <!-- burger menu -->
-
-        <!-- form report mistake -->
-        <div class="wrapper-form-mistake" id="formMistake">
-          <form class="form-mistake">
-            <h3 class="form-mistake__heading">report about mistake</h3>
-            <div class="form-mistake__item">
-              <label for="wrongWords">Word:</label>
-              <input type="text" id="wrongWords" name="word" autocomplete="off">
-            </div>
-            <div class="form-mistake__item">
-              <label for="wrongTranslate">Translate:</label>
-              <input type="text" id="wrongTranslate" name="translate" autocomplete="off" placeholder="...">
-            </div>
-            <div class="form-mistake__item">
-              <label for="note">Note:</label>
-              <textarea name="note" id="note" cols="30" rows="5" autocomplete="off" placeholder="..."></textarea>
-            </div>
-            <div class="form-mistake__buttons">
-              <button class="sendReport" id="sendReport">Send</button>
-              <button class="cancelReport" id="cancelReport">Cancel</button>
-            </div>
-          </form>
-        </div>
-        <!-- form report mistake -->
       </main>
       <!-- <footer></footer> -->
     </div>
+
+
+    
     <!-- Table settingd -->
       <div class="tableSettings hidden" id="tableSettings">
         <img src="/images/gearSettings.svg" alt="settings">
       </div>
-    <!-- Table settingd -->
-  </div>
-
-  <!-- Icon tabel setting -->
-  <!-- <div class="table-icon-setting transform-scale" id="tableIconSetting">
-    <img src="/images/tableSetting.svg" alt="view table setting">
-  </div> -->
-  <!-- Icon tabel setting -->
-
-  <!-- Setting table view -->
-  <div class="wrapper-table-setting hidden" id="wrapperTableSetting">
-    <div class="table-setting" id="tableSetting">
-      <h2 class="table-setting__heading">Print settings</h2>
-      <div class="table-setting__items">
-        <div class="table-setting__item">
-          <input type="radio" class="table-setting__input" name="check" id="withTranslate" checked>
-          <label for="withTranslate" class="table-setting__label">With translate</label>
+    <!-- Table setting -->
+    <!-- Box table setting -->
+    <div class="tableSettingsBox hide" id="tableSettingsBox">
+      <form class="tableSettingsBox__form">
+        <h3 class="tableSettingsBox__heading">Translate</h3>
+        <div class="tableSettingsBox__item">
+          <input type="radio" id="showTranslate" name="radioGearForm" checked>
+          <label for="showTranslate">show</label>
         </div>
-        <div class="table-setting__item">
-          <input type="radio" class="table-setting__input" name="check" id="withoutTranslate">
-          <label for="withoutTranslate" class="table-setting__label">Without translate</label>
+        <div class="tableSettingsBox__item">
+          <input type="radio" id="hideTranslate" name="radioGearForm">
+          <label for="hideTranslate">hide</label>
         </div>
-      </div>
-      <div class="table-setting__button">
-        <button id="tableSettingClose">Close</button>
-      </div>
-    <!-- </div> -->
+      </form>
+    </div>
+    <!-- Box table setting -->
   </div>
-  <!-- Setting table view -->
 
   <script type="module" src="/js/script.min.mjs"></script>
 </body>

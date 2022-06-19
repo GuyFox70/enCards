@@ -95,7 +95,7 @@ class TopButtons {
     Helper.addClass(hidden, 'hidden');
   }
 
-  init(menu, card) {
+  init(menu, card, tableSettings) {
     // Button English
     Helper.setEvent(this.#eng, 'click', e => {
       if (this.#flagMode !== 2) return;
@@ -111,6 +111,7 @@ class TopButtons {
     // Button Studied
     Helper.setEvent(this.#btnStudeid, 'click', e => {
       if (this.#flagMode !== 1) { 
+        Helper.addClass(tableSettings, 'hidden');
         Helper.setAttr(this.#eng, 'disabled', true);
         Helper.setAttr(this.#rus, 'disabled', true);
 
@@ -126,6 +127,7 @@ class TopButtons {
     // Button Card
     Helper.setEvent(this.#btnCard, 'click', e => {
       if (this.#flagMode !== 2) {
+        Helper.addClass(tableSettings, 'hidden');
         Helper.rmAttr(this.#eng, 'disabled');
         Helper.rmAttr(this.#rus, 'disabled');
 
@@ -142,6 +144,7 @@ class TopButtons {
     // Button Table
     Helper.setEvent(this.#btnTable, 'click', e => {
       if (this.#flagMode !== 3) {
+        Helper.rmClass(tableSettings, 'hidden');
         Helper.setAttr(this.#eng, 'disabled', true);
         Helper.setAttr(this.#rus, 'disabled', true);
         this.#setActiveItem(this.#btnTable);

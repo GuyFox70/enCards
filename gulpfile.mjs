@@ -40,6 +40,7 @@ const jsFiles = [
   './src/js/portionWords.mjs',
   './src/js/card.mjs',
   './src/js/topButtons.mjs',
+  './src/js/tableSettings.mjs',
   './src/js/main.mjs',
 ];
 

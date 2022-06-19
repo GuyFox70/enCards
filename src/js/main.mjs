@@ -16,12 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const pages = new Pages;
     const portionWords = new PortionWords;
     const topButtons = new TopButtons;
+    const tableSettings = new TableSettings;
   
     menu.init(topButtons, card);
     pages.init(portionWords, menu, card, topButtons, getWords);
     portionWords.init(card, menu, topButtons, pages, getWords);
     card.init(menu, topButtons, portionWords, pages, getWords);
-    topButtons.init(menu, card);
+    topButtons.init(menu, card, tableSettings.getTableSettingsTag());
+    tableSettings.init();
   
     // window.addEventListener('beforeunload', () => {
     //   if (menu.getWords() !== null) localStorage.setItem('words', Helper.toJson(menu.getArrWords()));
