@@ -520,10 +520,9 @@ body {
 .tableSettings > img {
   max-width: 100%;
   max-height: 100%;
-  transform: rotate(0deg);
   transition: transform .1s linear;
 }
-.tableSettings:hover > img {
+.rotate60 {
   transform: rotate(60deg);
   transition: transform .1s linear;
 }
@@ -540,11 +539,11 @@ body {
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity .3s linear;
+  transition: opacity .5s linear;
 }
 .tableSettingsBoxOpacity1 {
   opacity: 1;
-  transition: opacity .3s linear;
+  transition: opacity .5s linear;
 }
 .tableSettingsBox__form {
   width: 90%;
@@ -596,6 +595,9 @@ body {
 }
 .tableSettingsBox__item:not(:last-child) {
   margin: 0 0 7px 0;
+}
+.textTransperent {
+  color: transparent;
 }
 @media print {
   html {

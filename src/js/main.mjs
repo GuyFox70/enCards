@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     pages.init(portionWords, menu, card, topButtons, getWords);
     portionWords.init(card, menu, topButtons, pages, getWords);
     card.init(menu, topButtons, portionWords, pages, getWords);
-    topButtons.init(menu, card, tableSettings.getTableSettingsTag());
+    topButtons.init(menu, card, tableSettings);
     tableSettings.init();
   
     // window.addEventListener('beforeunload', () => {

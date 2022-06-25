@@ -110,8 +110,13 @@ class TopButtons {
     });
     // Button Studied
     Helper.setEvent(this.#btnStudeid, 'click', e => {
-      if (this.#flagMode !== 1) { 
-        Helper.addClass(tableSettings, 'hidden');
+      if (this.#flagMode !== 1) {
+        Helper.rmClass(tableSettings.getTableSettingsImgTag(), 'rotate60');
+        Helper.addClass(tableSettings.getGearBox(), 'hide');
+        tableSettings.resetCounter();
+        tableSettings.setChecked();
+
+        Helper.addClass(tableSettings.getTableSettingsTag(), 'hidden');
         Helper.setAttr(this.#eng, 'disabled', true);
         Helper.setAttr(this.#rus, 'disabled', true);
 
@@ -127,7 +132,12 @@ class TopButtons {
     // Button Card
     Helper.setEvent(this.#btnCard, 'click', e => {
       if (this.#flagMode !== 2) {
-        Helper.addClass(tableSettings, 'hidden');
+        Helper.rmClass(tableSettings.getTableSettingsImgTag(), 'rotate60');
+        Helper.addClass(tableSettings.getGearBox(), 'hide');
+        tableSettings.resetCounter();
+        tableSettings.setChecked();
+
+        Helper.addClass(tableSettings.getTableSettingsTag(), 'hidden');
         Helper.rmAttr(this.#eng, 'disabled');
         Helper.rmAttr(this.#rus, 'disabled');
 
@@ -144,7 +154,7 @@ class TopButtons {
     // Button Table
     Helper.setEvent(this.#btnTable, 'click', e => {
       if (this.#flagMode !== 3) {
-        Helper.rmClass(tableSettings, 'hidden');
+        Helper.rmClass(tableSettings.getTableSettingsTag(), 'hidden');
         Helper.setAttr(this.#eng, 'disabled', true);
         Helper.setAttr(this.#rus, 'disabled', true);
         this.#setActiveItem(this.#btnTable);
