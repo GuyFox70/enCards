@@ -63,3 +63,13 @@
 .cell__translate {
   width: 45%;
 }
+
+@media print {
+  .main__table {
+    margin: 0;
+  }
+
+  .table__tr {
+    page-break-inside: avoid;
+  }
+}

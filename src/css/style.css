@@ -504,6 +504,14 @@ body {
 .cell__translate {
   width: 45%;
 }
+@media print {
+  .main__table {
+    margin: 0;
+  }
+  .table__tr {
+    page-break-inside: avoid;
+  }
+}
 .tableSettings {
   position: fixed;
   bottom: 7px;
@@ -598,6 +606,11 @@ body {
 }
 .textTransperent {
   color: transparent;
+}
+@media print {
+  .tableSettings {
+    display: none;
+  }
 }
 @media print {
   html {

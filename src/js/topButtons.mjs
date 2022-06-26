@@ -9,6 +9,7 @@ class TopButtons {
   #rus;
   #flagEng;
   #flagMode;
+  #btnPrint;
 
   constructor() {
     this.#eng = Helper.getSelector('#eng');
@@ -16,6 +17,7 @@ class TopButtons {
     this.#btnStudeid = Helper.getSelector('#btnStudeid');
     this.#btnCard = Helper.getSelector('#btnCard');
     this.#btnTable = Helper.getSelector('#btnTable');
+    this.#btnPrint = Helper.getSelector('#topPrint');
     this.#activeItem =  this.#btnCard;
     this.#table = Helper.getSelector('#table');
     this.#tbody = Helper.getSelector('#table .table__tbody');
@@ -165,6 +167,10 @@ class TopButtons {
 
         this.#flagMode = 3;
       }
+    });
+    // Button print
+    Helper.setEvent(this.#btnPrint, 'click', e => {
+      window.print();
     });
   }
 }
