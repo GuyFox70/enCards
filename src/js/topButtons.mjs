@@ -10,6 +10,8 @@ class TopButtons {
   #flagEng;
   #flagMode;
   #btnPrint;
+  #imgPrint;
+  #imgPrint2;
 
   constructor() {
     this.#eng = Helper.getSelector('#eng');
@@ -18,11 +20,23 @@ class TopButtons {
     this.#btnCard = Helper.getSelector('#btnCard');
     this.#btnTable = Helper.getSelector('#btnTable');
     this.#btnPrint = Helper.getSelector('#topPrint');
+    this.#imgPrint = Helper.getSelector('#imgPrint');
+    this.#imgPrint2 = Helper.getSelector('#imgPrint2');
     this.#activeItem =  this.#btnCard;
     this.#table = Helper.getSelector('#table');
     this.#tbody = Helper.getSelector('#table .table__tbody');
     this.#flagEng = 1;
     this.#flagMode = 2;
+  }
+
+  #activePrint() {
+    Helper.addClass(this.#imgPrint, 'hidden');
+    Helper.rmClass(this.#imgPrint2, 'hidden');
+  }
+
+  #disactivePrint() {
+    Helper.addClass(this.#imgPrint2, 'hidden');
+    Helper.rmClass(this.#imgPrint, 'hidden');
   }
 
   isEnglish() {
@@ -113,6 +127,7 @@ class TopButtons {
     // Button Studied
     Helper.setEvent(this.#btnStudeid, 'click', e => {
       if (this.#flagMode !== 1) {
+        this.#disactivePrint();
         Helper.rmClass(tableSettings.getTableSettingsImgTag(), 'rotate60');
         Helper.addClass(tableSettings.getGearBox(), 'hide');
         tableSettings.resetCounter();
@@ -134,6 +149,7 @@ class TopButtons {
     // Button Card
     Helper.setEvent(this.#btnCard, 'click', e => {
       if (this.#flagMode !== 2) {
+        this.#disactivePrint();
         Helper.rmClass(tableSettings.getTableSettingsImgTag(), 'rotate60');
         Helper.addClass(tableSettings.getGearBox(), 'hide');
         tableSettings.resetCounter();
@@ -156,6 +172,7 @@ class TopButtons {
     // Button Table
     Helper.setEvent(this.#btnTable, 'click', e => {
       if (this.#flagMode !== 3) {
+        this.#activePrint();
         Helper.rmClass(tableSettings.getTableSettingsTag(), 'hidden');
         Helper.setAttr(this.#eng, 'disabled', true);
         Helper.setAttr(this.#rus, 'disabled', true);
@@ -170,6 +187,7 @@ class TopButtons {
     });
     // Button print
     Helper.setEvent(this.#btnPrint, 'click', e => {
+      if (Helper.hasClass(this.#imgPrint2, 'hidden')) return;
       window.print();
     });
   }
