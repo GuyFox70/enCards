@@ -367,6 +367,25 @@ body {
   grid-column-start: 3;
   grid-column-end: 4;
 }
+.card__exclamation-point {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  z-index: 10;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background: url('/images/exclamationPoint.svg') no-repeat;
+  background-position: 3px 1px;
+  background-size: 25px 25px;
+  transition: background .1s linear;
+}
+.card__exclamation-point:hover {
+  background: url('/images/exclamationPoint2.svg') no-repeat;
+  background-position: 3px 1px;
+  background-size: 25px 25px;
+  transition: background .1s linear;
+}
 .wrapper-form-mistake {
   position: absolute;
   top: 0;
